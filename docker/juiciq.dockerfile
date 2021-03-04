@@ -16,4 +16,4 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 ENV PYTHONUNBUFFERED=1
 ENV LANG=en_US.utf8
 EXPOSE 8000
-#CMD cd /apps/juiciq && uvicorn juiciq:app --host 0.0.0.0 --port 8000
+CMD cd /apps/juiciq && uvicorn juiciq:app --host 0.0.0.0 --port 8000
