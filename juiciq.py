@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from src.scrapenews import ScrapeNews
+from fastapi import FastAPI, HTTPException
+from src.scrapenews import ScrapeNews, CategoryDoesNotExist
 from redis import Redis
 import json
 
@@ -14,9 +14,12 @@ async def root():
 
 @app.get("/news/{category}")
 async def analyze(category: str) -> dict:
-    if redis.get(category):
-        news = redis.get(category)
-        news = json.loads(news.decode())
-    else:
-        news = ScrapeNews(category).scrape()
+    try:
+        if redis.get(category):
+            news = redis.get(category)
+            news = json.loads(news.decode())
+        else:
+            news = ScrapeNews(category).scrape()
+    except CategoryDoesNotExist:
+        raise HTTPException(status_code=404, detail="Category not found")
     return {"result": news}
