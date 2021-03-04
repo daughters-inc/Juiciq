@@ -21,4 +21,4 @@ async def analyze(category: str) -> dict:
             news = ScrapeNews(category).scrape()
     except CategoryDoesNotExist:
         raise HTTPException(status_code=404, detail="Category not found")
-    return {"result": news}
+    return {"results": news}
