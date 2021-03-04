@@ -1,3 +1,4 @@
 # Juiciq
-![icon](/assets/icon.jpeg)
+![icon](/assets/icon.jpeg)  
+
 Stock market news API
