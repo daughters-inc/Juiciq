@@ -44,5 +44,5 @@ class ScrapeNews:
         return articles
 
 
-class CategoryDoesNotExist:
+class CategoryDoesNotExist(Exception):
     pass
