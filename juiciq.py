@@ -16,7 +16,7 @@ async def root():
 async def analyze(category: str) -> dict:
     try:
         if redis.get(category):
-            news = json.loads(redis.get(category).decode)
+            news = json.loads(redis.get(category).decode())
         else:
             news = ScrapeNews(category).scrape()
     except CategoryDoesNotExist:
