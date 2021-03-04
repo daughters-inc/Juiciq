@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 selenium = "*"
 chromedriver-py = "*"
+fastapi = "*"
+uvicorn = "*"
+redis = "*"
 
 [dev-packages]
 

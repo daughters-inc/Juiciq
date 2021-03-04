@@ -1,4 +1,6 @@
 from selenium import webdriver
+from json import dumps
+from redis import Redis
 import time
 
 
@@ -8,11 +10,14 @@ class ScrapeNews:
                   "consumer_products_media", "diversified_business", "retailing_hospitality"]
     ROOT_URL = "https://ca.finance.yahoo.com/industries/"
     options = webdriver.ChromeOptions()
-    options.binary_location = "/usr/bin/chromium-freeworld"
+    options.binary_location = "/usr/bin/chromium"
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--headless")
-    driver = webdriver.Chrome('/usr/bin/chromedriver', options=options)
+    options.add_argument("--no-sandbox")
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome('/usr/local/bin/chromedriver', options=options)
     driver.implicitly_wait(3)
+    redis = Redis(host='redis', port=6379)
 
     def __init__(self, category: str):
         if category not in self.CATEGORIES:
@@ -35,6 +40,7 @@ class ScrapeNews:
             body = summary.find_element_by_xpath("p").text
             body = body[:250] + "..." if len(body) > 200 else body
             articles.append({"title": title_text, "body": body, "url": url})
+        self.redis.set(self.category, dumps(articles), ex=900)
         return articles
 
 

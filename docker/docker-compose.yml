@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  juiciq:
+    container_name: juiciq
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - "../:/apps/juiciq:Z"
+    build:
+      context: ../
+      dockerfile: docker/juiciq.dockerfile
+    ports:
+      - "8000:8000"
+  redis:
+    container_name: redis
+    image: "redis:alpine"
