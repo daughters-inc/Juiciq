@@ -9,6 +9,7 @@ chromedriver-py = "*"
 fastapi = "*"
 uvicorn = "*"
 redis = "*"
+cached-property = "*"
 
 [dev-packages]
 

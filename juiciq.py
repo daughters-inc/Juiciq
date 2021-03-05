@@ -18,7 +18,7 @@ async def analyze(category: str) -> dict:
         if redis.get(category):
             news = json.loads(redis.get(category).decode())
         else:
-            news = ScrapeNews(category).scrape()
+            news = ScrapeNews().scrape(category)
+        return {"results": news}
     except CategoryDoesNotExist:
         raise HTTPException(status_code=404, detail="Category not found")
-    return {"results": news}
